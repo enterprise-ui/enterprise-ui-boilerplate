@@ -1,4 +1,3 @@
-import 'isomorphic-fetch';
 import { useInject, API, IAPI } from '@enterprise-ui/appcore';
 
 import {call, put, takeEvery} from 'redux-saga/effects';
