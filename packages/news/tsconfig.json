@@ -20,7 +20,6 @@
     "noEmit": false,
     "jsx": "react",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
   },
   "include": [
     "src"

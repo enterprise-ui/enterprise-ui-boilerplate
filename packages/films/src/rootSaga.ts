@@ -1,4 +1,4 @@
-import { useInject, API, IAPI } from '@enterprise-ui/appcore';
+import { useDISagaInject, API, IAPI } from '@enterprise-ui/appcore';
 
 import {call, put, takeEvery} from 'redux-saga/effects';
 
@@ -6,10 +6,8 @@ import config from '../config';
 
 import {FETCH_ARTICLES_BEGIN, FETCH_ARTICLES_FAILURE, FETCH_ARTICLES_SUCCESS} from './consts';
 
-export const fetchArticles = (source: string) => {
+export const fetchArticles = (api: IAPI) => (source: string) => {
     console.log('fetchArticles', source);
-
-    const [api] = useInject<IAPI>(API);
 
     console.log('api', api);
 
@@ -23,16 +21,14 @@ export const fetchArticles = (source: string) => {
 
     console.log('url', url);
 
-    const promise = api.get({url});
-
-    console.log('promise', promise);
-
-    return promise.then((response) => response.json().then((json: any) => json));
+    return api.get({url}).then((response) => response.json().then((json: any) => json));
 };
 
 function* getArticles(action: any) {
     try {
-        const data = yield call(fetchArticles, action.payload);
+        const api: IAPI = yield useDISagaInject<IAPI>(API);
+
+        const data = yield call(fetchArticles(api), action.payload);
 
         yield put({type: FETCH_ARTICLES_SUCCESS, payload: data.articles});
     } catch (e) {
