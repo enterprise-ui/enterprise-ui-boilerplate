@@ -11,9 +11,14 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
 module.exports = (webpackEnv, isDevServerMode = false, workspaces = []) => {
+  console.log('workspaces', workspaces);
   const config = apputils.createWebpackConfig({
     babelIncludes: isDevServerMode
-      ? [...workspaces.filter((w) => w.useSrc).map((w) => path.join(w.packagePath, 'src'))]
+      ? [
+          ...workspaces
+            .filter((w) => w.useSrc)
+            .map((w) => path.join(w.packagePath, 'src')),
+        ]
       : [],
     babelOptions: {
       plugins: [
@@ -46,18 +51,27 @@ module.exports = (webpackEnv, isDevServerMode = false, workspaces = []) => {
               minifyCSS: true,
               minifyURLs: true,
             },
-          },
-        ),
+          }
+        )
       ),
-      shouldInlineRuntimeChunk && new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
+      shouldInlineRuntimeChunk &&
+        new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
       new CopyPlugin({
-        patterns: workspaces
-          .filter((w) => !w.useSrc)
-          .map((w) => ({
-            from: path.dirname(require.resolve(w.packageName)),
-            to: path.join(paths.appBuild, w.publicPath),
-          })),
+        patterns: [
+          ...workspaces
+            .filter((w) => !w.useSrc)
+            .map((w) => ({
+              from: path.dirname(require.resolve(w.packageName)),
+              to: path.join(paths.appBuild, w.publicPath),
+            })),
+          ...workspaces
+            .filter((w) => w.nls)
+            .map((w) => ({
+              from: path.join(w.packagePath, 'assets/locales'),
+              to: path.join(paths.appBuild, w.publicPath, 'locales'),
+            })),
+        ],
         options: {
           concurrency: 100,
         },
@@ -75,7 +89,7 @@ module.exports = (webpackEnv, isDevServerMode = false, workspaces = []) => {
                       [w.packageName]: path.join(w.packagePath, w.mainsrc),
                     }
                   : acc,
-              {},
+              {}
             ),
           }
         : {},

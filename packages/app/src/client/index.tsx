@@ -1,4 +1,4 @@
-import { I18NService, II18nConfig } from './i18n';
+import { I18NService, I18nConfig } from './i18n';
 
 import React from 'react';
 
@@ -27,7 +27,7 @@ import { ApiService } from './api';
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
-diContainer.addSingleton<II18n<II18nConfig>>(I18NService, I18N);
+diContainer.addSingleton<II18n<I18nConfig>>(I18NService, I18N);
 
 const store = configureStore(
   rootReducer,

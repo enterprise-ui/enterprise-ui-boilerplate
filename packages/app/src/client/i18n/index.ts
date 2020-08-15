@@ -6,44 +6,53 @@ import Backend from 'i18next-xhr-backend';
 
 import { injectable } from 'inversify';
 
-export interface II18nConfig {
-  defaultNS: 'NEWS';
-  ns: ['NEWS'];
+export interface I18nConfig {
+  backend?: {
+    loadPath: string,
+  },
+  contextSeparator?: string,
+  debug: boolean,
+  defaultNS?: 'NEWS',
+  fallbackLng: string,
+  interpolation: {
+    escapeValue: boolean,
+  },
+  lng: string,
+  load: 'languageOnly',
+  ns?: ['NEWS'],
+  react?: {
+    useSuspense: boolean,
+  },
 }
 
+const defaultConfig: I18nConfig = {
+  load: 'languageOnly',
+  lng: 'en',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+  debug: true,
+};
+
 @injectable()
-export class I18NService implements II18n<II18nConfig> {
+export class I18NService implements II18n<I18nConfig> {
   private _i18n: i18n.i18n = i18n;
 
   constructor() {
     this._i18n
       .use(LanguageDetector)
-      .use(Backend)
-      .init({
-        backend: {
-          loadPath: 'locales/{{lng}}/{{ns}}.json',
-        },
-        load: 'languageOnly',
-        fallbackLng: 'ru',
-        contextSeparator: '#',
-        interpolation: {
-          escapeValue: false,
-        },
-        react: {
-          useSuspense: false,
-        },
-        debug: true,
-      });
+      .use(Backend);
   }
 
-  init(config: II18nConfig) {
-    const { defaultNS } = config;
+  t(key: string) {
+    return this._i18n.t(key);
+  };
 
-    this._i18n.setDefaultNamespace(defaultNS);
-  }
-
-  loadNamespaces(ns: string[]) {
-    return this._i18n.loadNamespaces(ns);
+  load(config: I18nConfig) {
+    return this._i18n.init({...defaultConfig, ...config}, () => {
+      console.log('All translations were loaded');
+    });
   }
 
   get i18n(): i18n.i18n {

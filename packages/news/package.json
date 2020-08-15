@@ -49,6 +49,7 @@
   "enterprise-ui": {
     "key": "news",
     "mainsrc": "src/index.ts",
+    "nls": true,
     "publicPath": "/news"
   }
 }
