@@ -7,6 +7,7 @@ import {fetchArticles} from '../actions';
 import ArticleDetailModal from '../components/ArticleDetailModal';
 import Articles from '../components/Articles';
 import {IArticle} from '../models';
+import { Section } from '../components/Section';
 
 interface IRouteProps {
     id: string;
@@ -55,9 +56,7 @@ class HomePage extends React.Component<TProps, IState> {
           <ArticleDetailModal article={currentArticle as any} onClose={this.handleCloseModal} />
         )}
         <div className="row">
-          <div className="section">
-            <h3>Popular Articles</h3>
-          </div>
+          <Section labelKey="Pages.HomePage.title" />
           <div className="divider" />
           <div className="section">
             <div className="row">
