@@ -5,7 +5,7 @@ import React from 'react';
 import {
   configureStore,
   createDIFactory,
-  ModuleLoader,
+  ModuleRouter,
   DIContext,
   API,
   IAPI,
@@ -14,7 +14,7 @@ import {
 } from '@enterprise-ui/appcore';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import AppConfig from '../config';
@@ -23,11 +23,14 @@ import { usePrefersDarkMode } from './hooks/usePrefersDarkMode';
 import rootReducer from './store/reducers/rootReducer';
 import { GlobalStyle } from './styles/global';
 import { ApiService } from './api';
+import { GlobalMenu } from './components/GlobalMenu';
+import { I18N_GLOBAL_MENU } from './consts';
 
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
 diContainer.addSingleton<II18n<I18nConfig>>(I18NService, I18N);
+diContainer.addSingleton<II18n<I18nConfig>>(I18NService, I18N_GLOBAL_MENU);
 
 const store = configureStore(
   rootReducer,
@@ -46,9 +49,8 @@ const AppContainer = () => {
         <Provider store={store}>
           <DIContext.Provider value={{ container: diContainer }}>
             <Router>
-              <Link to="/news">News</Link>
-              <Link to="/films">Films</Link>
-              <ModuleLoader appConfig={AppConfig} store={store} />
+              <GlobalMenu appConfig={AppConfig} />
+              <ModuleRouter appConfig={AppConfig} store={store} />
             </Router>
           </DIContext.Provider>
         </Provider>

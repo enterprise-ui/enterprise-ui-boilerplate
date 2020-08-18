@@ -5,7 +5,7 @@ interface IOwnProps {
     labelKey: string;
 }
 
-export const Section: React.FunctionComponent<IOwnProps> = ({labelKey}) => {
+const Section: React.FunctionComponent<IOwnProps> = ({labelKey}) => {
   const [i18n] = useInject<II18n<any>>(I18N);
 
   return (
@@ -14,3 +14,7 @@ export const Section: React.FunctionComponent<IOwnProps> = ({labelKey}) => {
     </div>
   );
 };
+
+Section.displayName = 'Section';
+
+export {Section};

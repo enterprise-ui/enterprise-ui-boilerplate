@@ -39,6 +39,8 @@ const Articles: React.FunctionComponent<TProps> = ({ articles = [], onReadArticl
   </React.Fragment>
 );
 
+Articles.displayName = 'Articles';
+
 const mapStateToProps = (state: any) => ({
   articles: state.news.articles,
 });

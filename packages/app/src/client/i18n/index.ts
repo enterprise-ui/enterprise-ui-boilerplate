@@ -8,24 +8,24 @@ import { injectable } from 'inversify';
 
 export interface I18nConfig {
   backend?: {
-    loadPath: string,
-  },
-  contextSeparator?: string,
-  debug: boolean,
-  defaultNS?: 'NEWS',
-  fallbackLng: string,
-  interpolation: {
-    escapeValue: boolean,
-  },
-  lng: string,
-  load: 'languageOnly',
-  ns?: ['NEWS'],
+    loadPath: string;
+  };
+  contextSeparator?: string;
+  debug?: boolean;
+  defaultNS?: string;
+  fallbackLng?: string;
+  interpolation?: {
+    escapeValue: boolean;
+  };
+  lng?: string;
+  load?: 'languageOnly';
+  ns?: string[];
   react?: {
-    useSuspense: boolean,
-  },
+    useSuspense: boolean;
+  };
 }
 
-const defaultConfig: I18nConfig = {
+export const I18N_DEFAULT_CONFIG: I18nConfig = {
   load: 'languageOnly',
   lng: 'en',
   fallbackLng: 'en',
@@ -37,20 +37,19 @@ const defaultConfig: I18nConfig = {
 
 @injectable()
 export class I18NService implements II18n<I18nConfig> {
-  private _i18n: i18n.i18n = i18n;
+  private _i18n: i18n.i18n;
 
   constructor() {
-    this._i18n
-      .use(LanguageDetector)
-      .use(Backend);
+    this._i18n = i18n.createInstance().use(LanguageDetector).use(Backend);
   }
 
   t(key: string) {
+    console.log('translate', this._i18n.t(key));
     return this._i18n.t(key);
-  };
+  }
 
   load(config: I18nConfig) {
-    return this._i18n.init({...defaultConfig, ...config}, () => {
+    return this._i18n.init({ ...I18N_DEFAULT_CONFIG, ...config }, () => {
       console.log('All translations were loaded');
     });
   }

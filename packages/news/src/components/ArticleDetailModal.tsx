@@ -42,4 +42,6 @@ const ArticleDetailModal: React.FunctionComponent<IOwnProps> = ({article, onClos
     </React.Fragment>
 );
 
+ArticleDetailModal.displayName = 'ArticleDetailModal';
+
 export default ArticleDetailModal;

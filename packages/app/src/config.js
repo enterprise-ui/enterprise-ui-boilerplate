@@ -6,8 +6,8 @@ module.exports = {
     injectedReducerKey: 'films',
     injectedSagaKey: 'films',
     
-    loadModule: () => import(/* webpackIgnore: true */ '/films/bundle.js'),
-    moduleName: 'films',
+    loadModule: () => import('@enterprise-ui/films'),
+    useSrc: true,
     
   },
 
