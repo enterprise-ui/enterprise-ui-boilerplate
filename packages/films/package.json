@@ -50,6 +50,7 @@
     "hot": true,
     "key": "films",
     "mainsrc": "src/index.ts",
+    "nls": true,
     "publicPath": "/films"
   }
 }

@@ -1,0 +1,15 @@
+{
+    "Navigation": {
+        "Header": {
+            "title": "Films"
+        },
+        "Item": {
+            "Action": "Action",
+            "Adventure": "Adventure",
+            "Comedy": "Comedy",
+            "Crime": "Crime",
+            "Drama": "Drama",
+            "Horror": "Horror"
+        }
+    }
+}

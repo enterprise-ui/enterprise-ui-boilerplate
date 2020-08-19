@@ -1,4 +1,4 @@
-import { getService, API, IAPI } from '@enterprise-ui/appcore';
+import { getService, makePath, API, IAPI } from '@enterprise-ui/appcore';
 
 import {call, put, takeEvery} from 'redux-saga/effects';
 
@@ -6,14 +6,10 @@ import config from '../config';
 
 import {FETCH_ARTICLES_BEGIN, FETCH_ARTICLES_FAILURE, FETCH_ARTICLES_SUCCESS} from './consts';
 
-export const fetchArticles = (api: IAPI) => (genre: string) => {
-    let url;
+const URL = 'https://api.themoviedb.org/3/discover/movie?api_key=:apiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=:genre'
 
-    if (!genre) {
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${config.apikey}&language=en-US&sort_by=popularity.desc&page=1`;
-    } else {
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${config.apikey}&language=en-US&sort_by=popularity.desc&page=1&with_genres=${genre}`;
-    }
+export const fetchArticles = (api: IAPI) => (genre: string = '28') => {
+    const url = makePath(URL, {apiKey: config.apikey, genre});
 
     return api.get({url}).then((response) => response.json().then((json: any) => json));
 };

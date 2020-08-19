@@ -27,15 +27,9 @@ const ArticleDetailModal: React.FunctionComponent<IOwnProps> = ({article, onClos
             </div>
             <div className="modal-content">
                 <h4>{article.title}</h4>
-                <img className="responsive-img" src={article.urlToImage} alt={article.title} />
-                <p>{article.description}</p>
-                <p>{article.content}</p>
+                <img className="responsive-img" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${article.poster_path}`} alt={article.title} />
+                <p>{article.overview}</p>
                 <div className="divider" />
-                <div className="section">
-                    <a href={article.url} className="waves-effect waves-light btn" target="_blank" rel="noopener noreferrer">
-                        Full Article
-                    </a>
-                </div>
             </div>
         </div>
         <div role="presentation" onClick={onClose} className="modal-overlay" style={{zIndex: 1002, display: 'block', opacity: 0.5}} />

@@ -1,10 +1,5 @@
 export interface IArticle {
-    content: string;
-    description: string;
-    source: {
-        name: string;
-    };
-    title: string;
-    url: string;
+    overview: string;
     poster_path: string;
+    title: string;
 }

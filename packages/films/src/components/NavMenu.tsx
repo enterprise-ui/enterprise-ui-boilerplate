@@ -1,66 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useInject, II18n, I18N } from '@enterprise-ui/appcore';
+import { NAVIGATION_CONFIG } from '../consts';
 
 const NavMenu: React.FunctionComponent = () => {
-  const [menuOpen, setMenuToggle] = useState(false);
-
-  const toggleMenu = () => setMenuToggle(!menuOpen);
-
-  const stylesOpen = {
-    transform: 'translateX(0px)',
-  };
+  const [i18n] = useInject<II18n<any>>(I18N);
 
   return (
     <div className="navbar-fixed">
       <nav className="red">
         <div className="container">
           <div className="nav-wrapper">
-            <a href="/films/" className="brand-logo">
-              FIlms
+            <a href={NAVIGATION_CONFIG.header.link.path} className="brand-logo">
+              {i18n.t(NAVIGATION_CONFIG.header.title.labelKey)}
             </a>
-            <a
-              href="javascript:void(0)"
-              onClick={toggleMenu}
-              className="sidenav-trigger right"
-            >
-              <i className="material-icons">menu</i>
-            </a>
-            <div
-              className="sidenav-overlay"
-              style={menuOpen ? { display: 'block', opacity: 1 } : {}}
-              onClick={toggleMenu}
-            />
             <ul id="nav" className="right hide-on-med-and-down">
-              <li>
-                <Link to="/films/28" className="item">
-                  Action
-                </Link>
-              </li>
-              <li>
-                <Link to="/films/12" className="item">
-                  Adventure
-                </Link>
-              </li>
-              <li>
-                <Link to="/films/35" className="item">
-                  Comedy
-                </Link>
-              </li>
-              <li>
-                <Link to="/films/80" className="item">
-                  Crime
-                </Link>
-              </li>
-              <li>
-                <Link to="/films/18" className="item">
-                  Drama
-                </Link>
-              </li>
-              <li>
-                <Link to="/films/27" className="item">
-                  Horror
-                </Link>
-              </li>
+              {NAVIGATION_CONFIG.items.map(({path, labelKey}) => (
+                <li>
+                  <Link to={path} className="item">
+                    {i18n.t(labelKey)}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
