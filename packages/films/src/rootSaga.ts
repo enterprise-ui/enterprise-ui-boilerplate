@@ -6,13 +6,13 @@ import config from '../config';
 
 import {FETCH_ARTICLES_BEGIN, FETCH_ARTICLES_FAILURE, FETCH_ARTICLES_SUCCESS} from './consts';
 
-export const fetchArticles = (api: IAPI) => (source: string) => {
+export const fetchArticles = (api: IAPI) => (genre: string) => {
     let url;
 
-    if (source) {
-        url = `https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${config.apikey}`;
+    if (!genre) {
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${config.apikey}&language=en-US&sort_by=popularity.desc&page=1`;
     } else {
-        url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${config.apikey}`;
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${config.apikey}&language=en-US&sort_by=popularity.desc&page=1&with_genres=${genre}`;
     }
 
     return api.get({url}).then((response) => response.json().then((json: any) => json));
@@ -24,7 +24,7 @@ function* getArticles(action: any) {
 
         const data = yield call(fetchArticles(api), action.payload);
 
-        yield put({type: FETCH_ARTICLES_SUCCESS, payload: data.articles});
+        yield put({type: FETCH_ARTICLES_SUCCESS, payload: data});
     } catch (e) {
         yield put({type: FETCH_ARTICLES_FAILURE, payload: e});
     }

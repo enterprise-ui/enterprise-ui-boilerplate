@@ -23,7 +23,7 @@ const Articles: React.FunctionComponent<TProps> = ({ articles = [], onReadArticl
       <div className="col s12 m6 l6 xl4" key={article.title}>
         <div className="card large">
           <div className="card-image">
-            <LazyLoadImage alt={article.title} src={article.urlToImage} />
+            <LazyLoadImage alt={article.title} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${article.poster_path}`} />
           </div>
           <div className="card-content">
             <span className="card-title">{article.title}</span>
@@ -40,7 +40,7 @@ const Articles: React.FunctionComponent<TProps> = ({ articles = [], onReadArticl
 );
 
 const mapStateToProps = (state: any) => ({
-  articles: state.films.articles,
+  articles: state.films.items.results,
 });
 
 export default connect<IStateProps, {}, IOwnProps>(mapStateToProps)(Articles);

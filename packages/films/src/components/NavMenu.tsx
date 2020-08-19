@@ -15,8 +15,8 @@ const NavMenu: React.FunctionComponent = () => {
       <nav className="red">
         <div className="container">
           <div className="nav-wrapper">
-            <a href="/news/" className="brand-logo">
-              News
+            <a href="/films/" className="brand-logo">
+              FIlms
             </a>
             <a
               href="javascript:void(0)"
@@ -32,33 +32,33 @@ const NavMenu: React.FunctionComponent = () => {
             />
             <ul id="nav" className="right hide-on-med-and-down">
               <li>
-                <Link to="/news/techradar" className="item">
-                  Tech Radar
+                <Link to="/films/28" className="item">
+                  Action
                 </Link>
               </li>
               <li>
-                <Link to="/news/mashable" className="item">
-                  Mashable
+                <Link to="/films/12" className="item">
+                  Adventure
                 </Link>
               </li>
               <li>
-                <Link to="/news/the-verge" className="item">
-                  The Verge
+                <Link to="/films/35" className="item">
+                  Comedy
                 </Link>
               </li>
               <li>
-                <Link to="/news/the-next-web" className="item">
-                  TNW
+                <Link to="/films/80" className="item">
+                  Crime
                 </Link>
               </li>
               <li>
-                <Link to="/news/wired" className="item">
-                  Wired
+                <Link to="/films/18" className="item">
+                  Drama
                 </Link>
               </li>
               <li>
-                <Link to="/news/recode" className="item">
-                  Recode
+                <Link to="/films/27" className="item">
+                  Horror
                 </Link>
               </li>
             </ul>

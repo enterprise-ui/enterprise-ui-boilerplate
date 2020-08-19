@@ -6,5 +6,5 @@ export interface IArticle {
     };
     title: string;
     url: string;
-    urlToImage: string;
+    poster_path: string;
 }
