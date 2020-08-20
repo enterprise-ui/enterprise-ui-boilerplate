@@ -9,12 +9,12 @@ import {
   DIContext,
   API,
   IAPI,
-  II18n,
+  II18N,
   I18N,
 } from '@enterprise-ui/appcore';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import AppConfig from '../config';
@@ -24,13 +24,13 @@ import rootReducer from './store/reducers/rootReducer';
 import { GlobalStyle } from './styles/global';
 import { ApiService } from './api';
 import { GlobalMenu } from './components/GlobalMenu';
-import { I18N_GLOBAL_MENU } from './consts';
+import { I18N_COMMON } from './consts';
 
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
-diContainer.addSingleton<II18n<I18nConfig>>(I18NService, I18N);
-diContainer.addSingleton<II18n<I18nConfig>>(I18NService, I18N_GLOBAL_MENU);
+diContainer.addSingleton<II18N>(I18NService, I18N);
+diContainer.addSingleton<II18N>(I18NService, I18N_COMMON);
 
 const store = configureStore(
   rootReducer,

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useInject, II18n, I18N } from '@enterprise-ui/appcore';
+import { useInject, II18N, I18N } from '@enterprise-ui/appcore';
 import { NAVIGATION_CONFIG } from '../consts';
 
 const NavMenu: React.FunctionComponent = () => {
-  const [i18n] = useInject<II18n<any>>(I18N);
+  const [i18n] = useInject<II18N>(I18N);
 
   return (
     <div className="navbar-fixed">

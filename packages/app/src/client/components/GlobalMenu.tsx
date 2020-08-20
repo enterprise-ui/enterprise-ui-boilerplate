@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { I18N_GLOBAL_MENU } from '../consts';
-import { II18n, useInject, IApplicationConfig } from '@enterprise-ui/appcore';
+import { I18N_COMMON } from '../consts';
+import { II18N, useInject, IApplicationConfig } from '@enterprise-ui/appcore';
 import { I18nConfig } from '../i18n';
 
 const i18nConfig: I18nConfig = {
@@ -20,7 +20,7 @@ interface IOwnProps {
 
 const GlobalMenu: React.FunctionComponent<IOwnProps> = ({ appConfig }) => {
   const [localeLoading, setLocaleLoading] = React.useState(true);
-  const [i18n] = useInject<II18n<I18nConfig>>(I18N_GLOBAL_MENU);
+  const [i18n] = useInject<II18N>(I18N_COMMON);
 
   const paths = Object.keys(appConfig);
 
