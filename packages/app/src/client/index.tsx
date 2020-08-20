@@ -1,5 +1,3 @@
-import { I18NService, I18nConfig } from './i18n';
-
 import React from 'react';
 
 import {
@@ -10,7 +8,7 @@ import {
   API,
   IAPI,
   II18N,
-  I18N,
+  I18NService,
 } from '@enterprise-ui/appcore';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -29,7 +27,6 @@ import { I18N_COMMON } from './consts';
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
-diContainer.addSingleton<II18N>(I18NService, I18N);
 diContainer.addSingleton<II18N>(I18NService, I18N_COMMON);
 
 const store = configureStore(
