@@ -17,12 +17,12 @@ export interface I18nConfig {
   };
 }
 
-export const I18N_DEFAULT_CONFIG: I18nConfig = {
-  load: 'languageOnly',
-  lng: 'en',
-  fallbackLng: 'en',
-  interpolation: {
-    escapeValue: false,
+export const I18N_COMMON_CONFIG: I18nConfig = {
+  backend: {
+    loadPath: '/assets/locales/{{lng}}/{{ns}}.json',
   },
+  contextSeparator: '#',
   debug: true,
+  defaultNS: 'GLOBAL_MENU',
+  ns: ['GLOBAL_MENU'],
 };

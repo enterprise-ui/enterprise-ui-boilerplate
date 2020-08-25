@@ -23,11 +23,12 @@ import { GlobalStyle } from './styles/global';
 import { ApiService } from './api';
 import { GlobalMenu } from './components/GlobalMenu';
 import { I18N_COMMON } from './consts';
+import { I18N_COMMON_CONFIG } from './i18n';
 
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
-diContainer.addSingleton<II18N>(I18NService, I18N_COMMON);
+diContainer.addSingleton<II18N>(I18NService, I18N_COMMON, I18N_COMMON_CONFIG);
 
 const store = configureStore(
   rootReducer,
@@ -56,10 +57,13 @@ const AppContainer = () => {
   );
 };
 
-const container = document.getElementById('root');
+diContainer.preloadAll([I18N_COMMON]).then(() => {
+  console.log('preloadAll.done');
+  const container = document.getElementById('root');
 
-if (window.__SSR_DATA__?.isServerInitialRender) {
-  ReactDOM.hydrate(<AppContainer />, container);
-} else {
-  ReactDOM.render(<AppContainer />, container);
-}
+  if (window.__SSR_DATA__?.isServerInitialRender) {
+    ReactDOM.hydrate(<AppContainer />, container);
+  } else {
+    ReactDOM.render(<AppContainer />, container);
+  }
+});
