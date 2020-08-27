@@ -1,5 +1,3 @@
-import { I18NService, I18nConfig } from './i18n';
-
 import React from 'react';
 
 import {
@@ -10,7 +8,7 @@ import {
   API,
   IAPI,
   II18N,
-  I18N,
+  I18NService,
 } from '@enterprise-ui/appcore';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -24,13 +22,13 @@ import rootReducer from './store/reducers/rootReducer';
 import { GlobalStyle } from './styles/global';
 import { ApiService } from './api';
 import { GlobalMenu } from './components/GlobalMenu';
-import { I18N_COMMON } from './consts';
+import { I18N_COMMON_KEY } from './consts';
+import { I18N_COMMON_CONFIG } from './i18n';
 
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
-diContainer.addSingleton<II18N>(I18NService, I18N);
-diContainer.addSingleton<II18N>(I18NService, I18N_COMMON);
+diContainer.addSingleton<II18N>(I18NService, I18N_COMMON_KEY, I18N_COMMON_CONFIG);
 
 const store = configureStore(
   rootReducer,
@@ -50,7 +48,7 @@ const AppContainer = () => {
           <DIContext.Provider value={{ container: diContainer }}>
             <Router>
               <GlobalMenu appConfig={AppConfig} />
-              <ModuleRouter appConfig={AppConfig} store={store} />
+              <ModuleRouter appConfig={AppConfig} key="ModuleRouter" />
             </Router>
           </DIContext.Provider>
         </Provider>
@@ -59,10 +57,13 @@ const AppContainer = () => {
   );
 };
 
-const container = document.getElementById('root');
+diContainer.preloadAll([I18N_COMMON_KEY]).then(() => {
+  console.log('preloadAll.done');
+  const container = document.getElementById('root');
 
-if (window.__SSR_DATA__?.isServerInitialRender) {
-  ReactDOM.hydrate(<AppContainer />, container);
-} else {
-  ReactDOM.render(<AppContainer />, container);
-}
+  if (window.__SSR_DATA__?.isServerInitialRender) {
+    ReactDOM.hydrate(<AppContainer />, container);
+  } else {
+    ReactDOM.render(<AppContainer />, container);
+  }
+});

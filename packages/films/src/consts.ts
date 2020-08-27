@@ -34,3 +34,5 @@ export const NAVIGATION_CONFIG = {
     },
   ],
 };
+
+export const DI_I18N_KEY = Symbol.for('FILMS');
