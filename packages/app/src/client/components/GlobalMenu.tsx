@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { I18N_COMMON } from '../consts';
+import { I18N_COMMON_KEY } from '../consts';
 import { II18N, useInject, IApplicationConfig } from '@enterprise-ui/appcore';
 
 interface IOwnProps {
@@ -8,7 +8,7 @@ interface IOwnProps {
 }
 
 const GlobalMenu: React.FunctionComponent<IOwnProps> = ({ appConfig }) => {
-  const [i18n] = useInject<II18N>(I18N_COMMON);
+  const [i18n] = useInject<II18N>(I18N_COMMON_KEY);
 
   const paths = Object.keys(appConfig);
 

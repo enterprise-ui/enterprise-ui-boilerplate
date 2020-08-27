@@ -22,13 +22,13 @@ import rootReducer from './store/reducers/rootReducer';
 import { GlobalStyle } from './styles/global';
 import { ApiService } from './api';
 import { GlobalMenu } from './components/GlobalMenu';
-import { I18N_COMMON } from './consts';
+import { I18N_COMMON_KEY } from './consts';
 import { I18N_COMMON_CONFIG } from './i18n';
 
 const diContainer = createDIFactory();
 
 diContainer.addSingleton<IAPI>(ApiService, API);
-diContainer.addSingleton<II18N>(I18NService, I18N_COMMON, I18N_COMMON_CONFIG);
+diContainer.addSingleton<II18N>(I18NService, I18N_COMMON_KEY, I18N_COMMON_CONFIG);
 
 const store = configureStore(
   rootReducer,
@@ -48,7 +48,7 @@ const AppContainer = () => {
           <DIContext.Provider value={{ container: diContainer }}>
             <Router>
               <GlobalMenu appConfig={AppConfig} />
-              <ModuleRouter appConfig={AppConfig} store={store} />
+              <ModuleRouter appConfig={AppConfig} key="ModuleRouter" />
             </Router>
           </DIContext.Provider>
         </Provider>
@@ -57,7 +57,7 @@ const AppContainer = () => {
   );
 };
 
-diContainer.preloadAll([I18N_COMMON]).then(() => {
+diContainer.preloadAll([I18N_COMMON_KEY]).then(() => {
   console.log('preloadAll.done');
   const container = document.getElementById('root');
 
